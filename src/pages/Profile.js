@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 
 function urlB64ToUint8Array(base64String) {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
-    .replace(/\-/g, '+')
-    .replace(/_/g, '/');
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
 
   const rawData = window.atob(base64);
   const outputArray = new Uint8Array(rawData.length);
@@ -15,16 +13,17 @@ function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
-function subscribe () {
-  const key = "BEqpU1GKb_u5qksikpld3yKKQUnYgvnU9NvVhAjD1SX-4ZkYTfHhDS5GhSBjysqvJklqF-4DAv4HHvhksbJTu08";
+async function subscribe() {
+  const key = "BFU28NcY0EjONuGJsCfi5cWYn0s7tQ2rbndMkLertt6tNvpWB-8rBbRPemTcgO64APWgKTCe1rVMxT4-d1-MS24";
 
   try {
-    const sub = global.registration.pushManager.subscribe({
+    await global.registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlB64ToUint8Array(key)
-    })
+      applicationServerKey: urlB64ToUint8Array(key),
+    });
+    console.log("Subscribe!");
   } catch (error) {
-    console.log("Cannot Subscribe. ");
+    console.error("Cannot subscribe.");
   }
 }
 
@@ -94,6 +93,7 @@ function Profile() {
           </div>
         </div>
       </header>
+
       <section className="bg-gray-100 py-8 px-4">
         <div className="container mx-auto">
           <ul className="breadcrumb">
@@ -101,7 +101,7 @@ function Profile() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link href="/profile" aria-label="current-page">
+              <Link to="/profile" aria-label="current-page">
                 My Profile
               </Link>
             </li>

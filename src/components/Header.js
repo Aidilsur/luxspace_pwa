@@ -28,7 +28,7 @@ function Header() {
               </li>
               <li className="mx-3 py-6 md:py-0">
                 <Link to="/profile" className="text-black md:text-white hover:underline">
-                  profile
+                  Profile
                 </Link>
               </li>
             </ul>
